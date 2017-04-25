@@ -131,7 +131,7 @@ module LC
 
       # use less permissive key if both are specified
       defaults[:master_key] = ENV["PARSE_MASTER_API_KEY"] unless data[:master_key] || defaults[:api_key]
-      @@client = Client.new(defaults, &blk)
+      @client = Client.new(defaults, &blk)
     end
 
     # A convenience method for using global.json
@@ -146,13 +146,13 @@ module LC
 
     # Used mostly for testing. Lets you delete the api key global vars.
     def destroy
-      @@client = nil
+      @client = nil
       self
     end
 
     def client
-      raise LCError, "API not initialized" if !@@client
-      @@client
+      raise LCError, "API not initialized" if !@client
+      @client
     end
 
     # Perform a simple retrieval of a simple object, or all objects of a
