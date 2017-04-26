@@ -14,9 +14,12 @@ module LC
     attr_accessor :data
     attr_accessor :production
 
-    def initialize(data, channel = "")
+    attr_accessor :client
+
+    def initialize(data, channel = "", client = nil)
       @data = data
       @channel = channel
+      @client = client
     end
 
     def save
@@ -40,7 +43,11 @@ module LC
       body.merge!({ :type => @type }) if @type
       body.merge!({ :prod => 'dev' }) if not @production
 
-      response = LC.client.request uri, :post, body.to_json, nil
+      if @client
+        @client.request uri, :post, body.to_json, nil
+      else
+        LC.client.request uri, :post, body.to_json, nil
+      end
     end
 
   end
