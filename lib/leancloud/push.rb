@@ -36,6 +36,10 @@ module LC
         body.merge!({ :where => @where })
         body.delete :channel
       end
+      
+      if @production
+        body.merge!({ :prod => @production})
+      end
 
       body.merge!({ :expiration_interval => @expiration_time_interval }) if @expiration_time_interval
       body.merge!({ :expiration_time => @expiration_time }) if @expiration_time
